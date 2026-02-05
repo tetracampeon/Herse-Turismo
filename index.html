@@ -1,0 +1,230 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Herse Turismo - Encuentra tu próximo destino</title>
+    
+    <link rel="stylesheet" href="css/style.css">
+    
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+</head>
+<body>
+
+    <header class="main-header">
+        <div class="container header-content">
+            <a href="index.html" class="logo-container">
+                <img src="assets/logo.png" alt="Herse Turismo Logo" class="main-logo">
+            </a>
+
+            <nav class="main-nav">
+                <ul>
+                    <li><a href="#" class="active">Inicio</a></li>
+                    <li><a href="#">Vuelos</a></li>
+                    <li><a href="#">Hoteles</a></li>
+                    <li><a href="#">Paquetes</a></li>
+                    <li><a href="#" class="btn-contacto">Contacto</a></li>
+                </ul>
+            </nav>
+             <div class="menu-toggle">
+                <i class="fas fa-bars"></i>
+            </div>
+        </div>
+    </header>
+
+    <section class="hero-section">
+        <div class="container hero-content">
+            <h1>Comienza tu próxima aventura con Herse Turismo</h1>
+            <p>Los mejores destinos y ofertas pensados para ti.</p>
+
+            <div class="search-box-container">
+                <div class="search-tabs">
+                    <button class="tab active"><i class="fas fa-plane"></i> Vuelos</button>
+                    <button class="tab"><i class="fas fa-hotel"></i> Hoteles</button>
+                    <button class="tab"><i class="fas fa-suitcase-rolling"></i> Paquetes</button>
+                </div>
+
+                <form class="search-form">
+                    <div class="input-group">
+                        <label for="destino"><i class="fas fa-map-marker-alt"></i> Destino</label>
+                        <input type="text" id="destino" placeholder="¿A dónde viajas?">
+                    </div>
+                    <div class="input-group dates">
+                        <label for="fechas"><i class="fas fa-calendar-alt"></i> Fechas</label>
+                        <input type="text" id="fechas" placeholder="Ida - Vuelta">
+                    </div>
+                    <div class="input-group passengers">
+                        <label for="pasajeros"><i class="fas fa-user-friends"></i> Pasajeros</label>
+                        <input type="text" id="pasajeros" placeholder="2 Pasajeros">
+                    </div>
+                    <button type="submit" class="btn-search">Buscar <i class="fas fa-search"></i></button>
+                </form>
+            </div>
+        </div>
+    </section>
+
+    <section class="featured-offers container">
+        <h2>Destinos Destacados</h2>
+        
+        <div class="carousel-wrapper">
+            <button class="carousel-btn prev-btn" id="prevBtn"><i class="fas fa-chevron-left"></i></button>
+            
+            <div class="carousel-track" id="carouselTrack">
+                
+                <article class="offer-card">
+                    <div class="card-header">
+                        <div class="offer-image" style="background-image: url('https://images.unsplash.com/photo-1579124872834-023a48e7845f?auto=format&fit=crop&w=800&q=80');"></div>
+                        <span class="offer-badge">4 días | salidas todo el año</span>
+                    </div>
+                    <div class="card-body">
+                        <h3>Mendoza Clásica</h3>
+                        <div class="services-icons">
+                            <div class="service-item"><i class="fas fa-plane"></i><span>vuelos</span></div>
+                            <div class="service-item"><i class="fas fa-hotel"></i><span>alojamiento</span></div>
+                            <div class="service-item"><i class="fas fa-bus"></i><span>traslados</span></div>
+                            <div class="service-item"><i class="fas fa-notes-medical"></i><span>asistencia</span></div>
+                        </div>
+                        <div class="card-footer-split">
+                            <ul class="offer-details-list">
+                                <li>Vuelos desde Bs As / Córdoba</li>
+                                <li>Incluye hotel con desayuno</li>
+                            </ul>
+                            <div class="price-action">
+                                <span class="consult-label">Consultar</span>
+                                <span class="price-main">Tarifas</span>
+                            </div>
+                        </div>
+                    </div>
+                </article>
+
+                <article class="offer-card">
+                    <div class="card-header">
+                        <div class="offer-image" style="background-image: url('https://images.unsplash.com/photo-1612278675615-7b093b07772d?auto=format&fit=crop&w=800&q=80');"></div>
+                        <span class="offer-badge">5 días | Temporada Alta</span>
+                    </div>
+                    <div class="card-body">
+                        <h3>Bariloche Invernal</h3>
+                        <div class="services-icons">
+                            <div class="service-item"><i class="fas fa-plane"></i><span>vuelos</span></div>
+                            <div class="service-item"><i class="fas fa-snowflake"></i><span>excursión</span></div>
+                            <div class="service-item"><i class="fas fa-bus"></i><span>traslados</span></div>
+                            <div class="service-item"><i class="fas fa-notes-medical"></i><span>asistencia</span></div>
+                        </div>
+                        <div class="card-footer-split">
+                            <ul class="offer-details-list">
+                                <li>Salidas diarias programadas</li>
+                                <li>Hotel céntrico 3 estrellas</li>
+                            </ul>
+                            <div class="price-action">
+                                <span class="consult-label">Desde</span>
+                                <span class="price-main">$450k</span>
+                            </div>
+                        </div>
+                    </div>
+                </article>
+
+                 <article class="offer-card">
+                    <div class="card-header">
+                        <div class="offer-image" style="background-image: url('https://images.unsplash.com/photo-1582235942735-373e46c9892e?auto=format&fit=crop&w=800&q=80');"></div>
+                        <span class="offer-badge">3 días | Fin de semana</span>
+                    </div>
+                    <div class="card-body">
+                        <h3>Cataratas Full</h3>
+                        <div class="services-icons">
+                            <div class="service-item"><i class="fas fa-plane"></i><span>vuelos</span></div>
+                            <div class="service-item"><i class="fas fa-water"></i><span>parques</span></div>
+                            <div class="service-item"><i class="fas fa-bus"></i><span>traslados</span></div>
+                            <div class="service-item"><i class="fas fa-utensils"></i><span>cena</span></div>
+                        </div>
+                        <div class="card-footer-split">
+                            <ul class="offer-details-list">
+                                <li>Lado Argentino y Brasileño</li>
+                                <li>Guía coordinador permanente</li>
+                            </ul>
+                            <div class="price-action">
+                                <span class="consult-label">Consultar</span>
+                                <span class="price-main">Tarifas</span>
+                            </div>
+                        </div>
+                    </div>
+                </article>
+
+                <article class="offer-card">
+                    <div class="card-header">
+                        <div class="offer-image" style="background-image: url('https://images.unsplash.com/photo-1534234828569-1f3571d37b67?auto=format&fit=crop&w=800&q=80');"></div>
+                        <span class="offer-badge">4 días | Norte Argentino</span>
+                    </div>
+                    <div class="card-body">
+                        <h3>Salta la Linda</h3>
+                        <div class="services-icons">
+                            <div class="service-item"><i class="fas fa-plane"></i><span>vuelos</span></div>
+                            <div class="service-item"><i class="fas fa-mountain"></i><span>excursión</span></div>
+                            <div class="service-item"><i class="fas fa-bus"></i><span>traslados</span></div>
+                            <div class="service-item"><i class="fas fa-wine-glass"></i><span>bodega</span></div>
+                        </div>
+                        <div class="card-footer-split">
+                            <ul class="offer-details-list">
+                                <li>Excursión a Cafayate incluida</li>
+                                <li>Peña folclórica de bienvenida</li>
+                            </ul>
+                            <div class="price-action">
+                                <span class="consult-label">Consultar</span>
+                                <span class="price-main">Tarifas</span>
+                            </div>
+                        </div>
+                    </div>
+                </article>
+
+                <article class="offer-card">
+                    <div class="card-header">
+                        <div class="offer-image" style="background-image: url('https://images.unsplash.com/photo-1544885935-98dd03b09034?auto=format&fit=crop&w=800&q=80');"></div>
+                        <span class="offer-badge">5 días | Fin del Mundo</span>
+                    </div>
+                    <div class="card-body">
+                        <h3>Ushuaia Aventura</h3>
+                        <div class="services-icons">
+                            <div class="service-item"><i class="fas fa-plane"></i><span>vuelos</span></div>
+                            <div class="service-item"><i class="fas fa-ship"></i><span>navegar</span></div>
+                            <div class="service-item"><i class="fas fa-bus"></i><span>traslados</span></div>
+                            <div class="service-item"><i class="fas fa-notes-medical"></i><span>asistencia</span></div>
+                        </div>
+                        <div class="card-footer-split">
+                            <ul class="offer-details-list">
+                                <li>Navegación Canal Beagle</li>
+                                <li>Tren del Fin del Mundo</li>
+                            </ul>
+                            <div class="price-action">
+                                <span class="consult-label">Consultar</span>
+                                <span class="price-main">Tarifas</span>
+                            </div>
+                        </div>
+                    </div>
+                </article>
+
+            </div>
+            
+            <button class="carousel-btn next-btn" id="nextBtn"><i class="fas fa-chevron-right"></i></button>
+        </div>
+    </section>
+
+    <footer>
+        <div class="container">
+            <p>&copy; 2024 Herse Turismo. Todos los derechos reservados.</p>
+        </div>
+    </footer>
+
+    <script>
+        const track = document.getElementById('carouselTrack');
+        const nextBtn = document.getElementById('nextBtn');
+        const prevBtn = document.getElementById('prevBtn');
+
+        nextBtn.addEventListener('click', () => {
+            track.scrollBy({ left: 370, behavior: 'smooth' }); // Desplaza el ancho de una tarjeta + gap
+        });
+
+        prevBtn.addEventListener('click', () => {
+            track.scrollBy({ left: -370, behavior: 'smooth' });
+        });
+    </script>
+</body>
+</html>
