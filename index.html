@@ -6,225 +6,376 @@
     <title>Herse Turismo - Encuentra tu próximo destino</title>
     
     <link rel="stylesheet" href="css/style.css">
-    
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+
+    <style>
+        /* ESTILOS DEL BUSCADOR */
+        .search-form { display: flex; flex-wrap: wrap; gap: 10px; align-items: flex-end; width: 100%; }
+        /* CLASE PARA OCULTAR FORMULARIOS */
+        .form-hidden { display: none !important; }
+        
+        .input-group { flex: 1 1 150px; display: flex; flex-direction: column; gap: 5px; }
+        .search-form input, .search-form select, .btn-search { height: 50px !important; border-radius: 5px; border: 1px solid #ccc; padding: 0 15px; box-sizing: border-box; font-size: 0.95rem; width: 100%; }
+        .btn-search { background-color: #ffa500; color: white; border: none; cursor: pointer; font-weight: bold; flex: 0 0 auto; width: auto !important; min-width: 120px; }
+        .btn-search:hover { background-color: #e69500; }
+        .input-group label { font-size: 0.85rem; font-weight: bold; color: #333; }
+        
+        /* ESTILOS DE PRECIOS Y BADGES */
+        .badge-escala { background-color: #ffc107; color: #333; padding: 2px 8px; border-radius: 10px; font-size: 0.8rem; font-weight: bold; }
+        .badge-directo { background-color: #28a745; color: white; padding: 2px 8px; border-radius: 10px; font-size: 0.8rem; font-weight: bold; }
+        .price-range-label { font-size: 0.8rem; color: #666; display: block; margin-bottom: 2px;}
+        .price-range-value { font-size: 1.1em; font-weight: bold; color: #28a745; display: block;}
+        
+        /* ESTILOS ICONOS */
+        .services-icons { display: flex; justify-content: space-around; margin: 15px 0; padding: 10px 0; border-top: 1px solid #eee; border-bottom: 1px solid #eee; }
+        .service-item { display: flex; flex-direction: column; align-items: center; font-size: 0.8rem; color: #666; gap: 5px; }
+        .service-item i { font-size: 1.2rem; color: #ffa500; }
+        
+        @media (max-width: 768px) {
+            .search-form { flex-direction: column; }
+            .input-group, .btn-search { width: 100% !important; }
+        }
+    </style>
 </head>
 <body>
 
+    <datalist id="aeropuertos-list">
+        <option value="Buenos Aires - Ezeiza (EZE)">
+        <option value="Bariloche (BRC)">
+        <option value="Mendoza (MDZ)">
+        <option value="Córdoba (COR)">
+        <option value="Iguazú (IGR)">
+        <option value="Salta (SLA)">
+        <option value="Ushuaia (USH)">
+        <option value="Miami (MIA)">
+        <option value="Madrid (MAD)">
+        <option value="Cancún (CUN)">
+        <option value="Río de Janeiro (GIG)">
+        <option value="Nueva York (JFK)">
+    </datalist>
+
     <header class="main-header">
         <div class="container header-content">
-            <a href="index.html" class="logo-container">
-                <img src="assets/logo.png" alt="Herse Turismo Logo" class="main-logo">
-            </a>
-
+            <a href="index.html" class="logo-container"><img src="assets/logo.png" alt="Herse Turismo Logo" class="main-logo"></a>
             <nav class="main-nav">
                 <ul>
                     <li><a href="#" class="active">Inicio</a></li>
                     <li><a href="#">Vuelos</a></li>
-                    <li><a href="#">Hoteles</a></li>
                     <li><a href="#">Paquetes</a></li>
-                    <li><a href="#" class="btn-contacto">Contacto</a></li>
+                    <li><a href="#">Contacto</a></li>
                 </ul>
             </nav>
-             <div class="menu-toggle">
-                <i class="fas fa-bars"></i>
-            </div>
         </div>
     </header>
 
     <section class="hero-section">
         <div class="container hero-content">
-            <h1>Comienza tu próxima aventura con Herse Turismo</h1>
-            <p>Los mejores destinos y ofertas pensados para ti.</p>
+            <h1>Descubre tu próximo destino</h1>
+            <p>Las mejores ofertas en vuelos, hoteles y paquetes.</p>
 
             <div class="search-box-container">
                 <div class="search-tabs">
-                    <button class="tab active"><i class="fas fa-plane"></i> Vuelos</button>
-                    <button class="tab"><i class="fas fa-hotel"></i> Hoteles</button>
-                    <button class="tab"><i class="fas fa-suitcase-rolling"></i> Paquetes</button>
+                    <button class="tab active" onclick="cambiarTab('vuelos')"><i class="fas fa-plane"></i> Vuelos</button>
+                    <button class="tab" onclick="cambiarTab('hoteles')"><i class="fas fa-hotel"></i> Hoteles</button>
+                    <button class="tab" onclick="cambiarTab('paquetes')"><i class="fas fa-suitcase-rolling"></i> Paquetes</button>
                 </div>
 
-                <form class="search-form">
+                <form class="search-form" id="form-vuelos">
                     <div class="input-group">
-                        <label for="destino"><i class="fas fa-map-marker-alt"></i> Destino</label>
-                        <input type="text" id="destino" placeholder="¿A dónde viajas?">
+                        <label>Origen</label>
+                        <input type="text" id="origen" list="aeropuertos-list" placeholder="Ej: Buenos Aires" required>
+                    </div>
+                    <div class="input-group">
+                        <label>Destino</label>
+                        <input type="text" id="destino" list="aeropuertos-list" placeholder="Ej: Miami" required>
                     </div>
                     <div class="input-group dates">
-                        <label for="fechas"><i class="fas fa-calendar-alt"></i> Fechas</label>
-                        <input type="text" id="fechas" placeholder="Ida - Vuelta">
+                        <label>Fecha Ida</label>
+                        <input type="date" id="fechaIda" required>
+                    </div>
+                    <div class="input-group dates">
+                        <label>Fecha Vuelta</label>
+                        <input type="date" id="fechaVuelta">
                     </div>
                     <div class="input-group passengers">
-                        <label for="pasajeros"><i class="fas fa-user-friends"></i> Pasajeros</label>
-                        <input type="text" id="pasajeros" placeholder="2 Pasajeros">
+                        <label>Pasajeros</label>
+                        <input type="number" id="pasajeros" min="1" value="1">
                     </div>
-                    <button type="submit" class="btn-search">Buscar <i class="fas fa-search"></i></button>
+                    <button type="submit" class="btn-search">Buscar Vuelo <i class="fas fa-search"></i></button>
                 </form>
+
+                <form class="search-form form-hidden" id="form-hoteles">
+                    <div class="input-group" style="flex: 2;">
+                        <label>Destino / Ciudad</label>
+                        <input type="text" id="destino-hotel" list="aeropuertos-list" placeholder="Ej: Bariloche" required>
+                    </div>
+                    <div class="input-group dates">
+                        <label>Entrada</label>
+                        <input type="date" id="checkin" required>
+                    </div>
+                    <div class="input-group dates">
+                        <label>Salida</label>
+                        <input type="date" id="checkout" required>
+                    </div>
+                    <div class="input-group passengers">
+                        <label>Huéspedes</label>
+                        <input type="number" min="1" value="2">
+                    </div>
+                    <button type="submit" class="btn-search">Buscar Hotel <i class="fas fa-bed"></i></button>
+                </form>
+
+                <form class="search-form form-hidden" id="form-paquetes">
+                    <div class="input-group" style="flex: 2;">
+                        <label>Destino</label>
+                        <input type="text" id="destino-paquete" list="aeropuertos-list" placeholder="Ej: Mendoza" required>
+                    </div>
+                    <div class="input-group dates">
+                        <label>Fecha de Viaje</label>
+                        <input type="date" id="fecha-paquete" required>
+                    </div>
+                    <div class="input-group passengers">
+                        <label>Pasajeros</label>
+                        <input type="number" id="pasajeros-paquete" min="1" value="2">
+                    </div>
+                    <button type="submit" class="btn-search">Buscar Paquete <i class="fas fa-search"></i></button>
+                </form>
+
             </div>
         </div>
     </section>
 
+    <div class="container">
+        <div id="resultados-busqueda" style="margin-top: 30px; margin-bottom: 30px;"></div>
+    </div>
+
     <section class="featured-offers container">
-        <h2>Destinos Destacados</h2>
-        
+        <h2>Ofertas Destacadas</h2>
         <div class="carousel-wrapper">
             <button class="carousel-btn prev-btn" id="prevBtn"><i class="fas fa-chevron-left"></i></button>
-            
             <div class="carousel-track" id="carouselTrack">
-                
-                <article class="offer-card">
-                    <div class="card-header">
-                        <div class="offer-image" style="background-image: url('https://images.unsplash.com/photo-1579124872834-023a48e7845f?auto=format&fit=crop&w=800&q=80');"></div>
-                        <span class="offer-badge">4 días | salidas todo el año</span>
-                    </div>
-                    <div class="card-body">
-                        <h3>Mendoza Clásica</h3>
-                        <div class="services-icons">
-                            <div class="service-item"><i class="fas fa-plane"></i><span>vuelos</span></div>
-                            <div class="service-item"><i class="fas fa-hotel"></i><span>alojamiento</span></div>
-                            <div class="service-item"><i class="fas fa-bus"></i><span>traslados</span></div>
-                            <div class="service-item"><i class="fas fa-notes-medical"></i><span>asistencia</span></div>
-                        </div>
-                        <div class="card-footer-split">
-                            <ul class="offer-details-list">
-                                <li>Vuelos desde Bs As / Córdoba</li>
-                                <li>Incluye hotel con desayuno</li>
-                            </ul>
-                            <div class="price-action">
-                                <span class="consult-label">Consultar</span>
-                                <span class="price-main">Tarifas</span>
-                            </div>
-                        </div>
-                    </div>
-                </article>
-
-                <article class="offer-card">
-                    <div class="card-header">
-                        <div class="offer-image" style="background-image: url('https://images.unsplash.com/photo-1612278675615-7b093b07772d?auto=format&fit=crop&w=800&q=80');"></div>
-                        <span class="offer-badge">5 días | Temporada Alta</span>
-                    </div>
-                    <div class="card-body">
-                        <h3>Bariloche Invernal</h3>
-                        <div class="services-icons">
-                            <div class="service-item"><i class="fas fa-plane"></i><span>vuelos</span></div>
-                            <div class="service-item"><i class="fas fa-snowflake"></i><span>excursión</span></div>
-                            <div class="service-item"><i class="fas fa-bus"></i><span>traslados</span></div>
-                            <div class="service-item"><i class="fas fa-notes-medical"></i><span>asistencia</span></div>
-                        </div>
-                        <div class="card-footer-split">
-                            <ul class="offer-details-list">
-                                <li>Salidas diarias programadas</li>
-                                <li>Hotel céntrico 3 estrellas</li>
-                            </ul>
-                            <div class="price-action">
-                                <span class="consult-label">Desde</span>
-                                <span class="price-main">$450k</span>
-                            </div>
-                        </div>
-                    </div>
-                </article>
-
-                 <article class="offer-card">
-                    <div class="card-header">
-                        <div class="offer-image" style="background-image: url('https://images.unsplash.com/photo-1582235942735-373e46c9892e?auto=format&fit=crop&w=800&q=80');"></div>
-                        <span class="offer-badge">3 días | Fin de semana</span>
-                    </div>
-                    <div class="card-body">
-                        <h3>Cataratas Full</h3>
-                        <div class="services-icons">
-                            <div class="service-item"><i class="fas fa-plane"></i><span>vuelos</span></div>
-                            <div class="service-item"><i class="fas fa-water"></i><span>parques</span></div>
-                            <div class="service-item"><i class="fas fa-bus"></i><span>traslados</span></div>
-                            <div class="service-item"><i class="fas fa-utensils"></i><span>cena</span></div>
-                        </div>
-                        <div class="card-footer-split">
-                            <ul class="offer-details-list">
-                                <li>Lado Argentino y Brasileño</li>
-                                <li>Guía coordinador permanente</li>
-                            </ul>
-                            <div class="price-action">
-                                <span class="consult-label">Consultar</span>
-                                <span class="price-main">Tarifas</span>
-                            </div>
-                        </div>
-                    </div>
-                </article>
-
-                <article class="offer-card">
-                    <div class="card-header">
-                        <div class="offer-image" style="background-image: url('https://images.unsplash.com/photo-1534234828569-1f3571d37b67?auto=format&fit=crop&w=800&q=80');"></div>
-                        <span class="offer-badge">4 días | Norte Argentino</span>
-                    </div>
-                    <div class="card-body">
-                        <h3>Salta la Linda</h3>
-                        <div class="services-icons">
-                            <div class="service-item"><i class="fas fa-plane"></i><span>vuelos</span></div>
-                            <div class="service-item"><i class="fas fa-mountain"></i><span>excursión</span></div>
-                            <div class="service-item"><i class="fas fa-bus"></i><span>traslados</span></div>
-                            <div class="service-item"><i class="fas fa-wine-glass"></i><span>bodega</span></div>
-                        </div>
-                        <div class="card-footer-split">
-                            <ul class="offer-details-list">
-                                <li>Excursión a Cafayate incluida</li>
-                                <li>Peña folclórica de bienvenida</li>
-                            </ul>
-                            <div class="price-action">
-                                <span class="consult-label">Consultar</span>
-                                <span class="price-main">Tarifas</span>
-                            </div>
-                        </div>
-                    </div>
-                </article>
-
-                <article class="offer-card">
-                    <div class="card-header">
-                        <div class="offer-image" style="background-image: url('https://images.unsplash.com/photo-1544885935-98dd03b09034?auto=format&fit=crop&w=800&q=80');"></div>
-                        <span class="offer-badge">5 días | Fin del Mundo</span>
-                    </div>
-                    <div class="card-body">
-                        <h3>Ushuaia Aventura</h3>
-                        <div class="services-icons">
-                            <div class="service-item"><i class="fas fa-plane"></i><span>vuelos</span></div>
-                            <div class="service-item"><i class="fas fa-ship"></i><span>navegar</span></div>
-                            <div class="service-item"><i class="fas fa-bus"></i><span>traslados</span></div>
-                            <div class="service-item"><i class="fas fa-notes-medical"></i><span>asistencia</span></div>
-                        </div>
-                        <div class="card-footer-split">
-                            <ul class="offer-details-list">
-                                <li>Navegación Canal Beagle</li>
-                                <li>Tren del Fin del Mundo</li>
-                            </ul>
-                            <div class="price-action">
-                                <span class="consult-label">Consultar</span>
-                                <span class="price-main">Tarifas</span>
-                            </div>
-                        </div>
-                    </div>
-                </article>
-
+                <div style="padding:20px; width:100%; text-align:center;">Cargando ofertas...</div>
             </div>
-            
             <button class="carousel-btn next-btn" id="nextBtn"><i class="fas fa-chevron-right"></i></button>
         </div>
     </section>
 
     <footer>
-        <div class="container">
-            <p>&copy; 2024 Herse Turismo. Todos los derechos reservados.</p>
-        </div>
+        <div class="container"><p>&copy; 2026 Herse Turismo.</p></div>
     </footer>
 
     <script>
-        const track = document.getElementById('carouselTrack');
-        const nextBtn = document.getElementById('nextBtn');
-        const prevBtn = document.getElementById('prevBtn');
+        const miWhatsapp = "5491100000000"; // CAMBIA TU NUMERO
+        const mapaIconos = { "vuelos": "fa-plane", "hotel": "fa-hotel", "traslados": "fa-bus", "asistencia": "fa-notes-medical", "nieve": "fa-snowflake", "barco": "fa-ship", "parques": "fa-water", "cena": "fa-utensils", "bodega": "fa-wine-glass", "wifi": "fa-wifi", "desayuno": "fa-coffee", "spa": "fa-spa", "piscina": "fa-swimming-pool", "gym": "fa-dumbbell", "playa": "fa-umbrella-beach", "bar": "fa-cocktail" };
 
-        nextBtn.addEventListener('click', () => {
-            track.scrollBy({ left: 370, behavior: 'smooth' }); // Desplaza el ancho de una tarjeta + gap
+        function limpiarCodigo(t) { const c = t.match(/\(([^)]+)\)/); return c ? c[1] : t.toUpperCase(); }
+
+        // 1. LÓGICA DE TABS
+        function cambiarTab(tab) {
+            document.getElementById('form-vuelos').classList.add('form-hidden');
+            document.getElementById('form-hoteles').classList.add('form-hidden');
+            document.getElementById('form-paquetes').classList.add('form-hidden');
+            
+            document.querySelectorAll('.tab').forEach(b => b.classList.remove('active'));
+            document.getElementById('form-' + tab).classList.remove('form-hidden');
+            
+            const botones = document.querySelectorAll('.tab');
+            if(tab === 'vuelos') botones[0].classList.add('active');
+            if(tab === 'hoteles') botones[1].classList.add('active');
+            if(tab === 'paquetes') botones[2].classList.add('active');
+
+            document.getElementById('resultados-busqueda').innerHTML = '';
+        }
+
+        // 2. BUSCAR HOTELES
+        document.getElementById('form-hoteles').addEventListener('submit', async function(e) {
+            e.preventDefault();
+            const destino = document.getElementById('destino-hotel').value;
+            const contenedor = document.getElementById('resultados-busqueda');
+            contenedor.innerHTML = '<div style="text-align:center; padding:20px; font-size:1.2rem;"><i class="fas fa-bed fa-spin"></i> Buscando hoteles...</div>';
+
+            try {
+                const resp = await fetch('http://localhost:8080/hoteles');
+                const hoteles = await resp.json();
+                const codigoDestino = limpiarCodigo(destino).toUpperCase();
+                const hotelesEncontrados = hoteles.filter(h => h.ubicacion.includes(codigoDestino));
+                contenedor.innerHTML = '';
+                
+                if(hotelesEncontrados.length === 0) {
+                    contenedor.innerHTML = '<div style="text-align:center; padding:20px; background:#fff;">No encontramos hoteles en ese destino.</div>';
+                    return;
+                }
+                hotelesEncontrados.forEach(hotel => {
+                    let iconos = '';
+                    hotel.servicios.forEach(s => iconos += `<i class="fas ${mapaIconos[s]||'fa-check'}" title="${s}" style="margin-right:5px; color:#ffa500;"></i>`);
+                    const html = `
+                        <div style="background: white; border-radius: 10px; padding: 20px; margin-bottom: 15px; display: flex; gap:20px; align-items: center; box-shadow: 0 4px 6px rgba(0,0,0,0.1); border-left: 5px solid #ffa500;">
+                            <img src="${hotel.imagen}" style="width:120px; height:90px; object-fit:cover; border-radius:5px;">
+                            <div style="flex:1;">
+                                <h3 style="margin:0; font-size:1.2rem;">${hotel.nombre}</h3>
+                                <p style="margin:5px 0; color:#666;">${hotel.ubicacion}</p>
+                                <div style="margin-top:5px;">${iconos}</div>
+                            </div>
+                            <div style="text-align:right;">
+                                <span class="price-range-label">Precio por noche</span>
+                                <span class="price-range-value">$${hotel.precio_noche.toLocaleString('es-AR')}</span>
+                                <a href="https://wa.me/${miWhatsapp}?text=Me interesa reservar el hotel ${hotel.nombre}" target="_blank" 
+                                   style="display:inline-block; background:#25D366; color:white; padding:8px 15px; border-radius:20px; text-decoration:none; font-weight:bold; margin-top:5px;">Reservar</a>
+                            </div>
+                        </div>`;
+                    contenedor.innerHTML += html;
+                });
+            } catch(e) { console.error(e); }
         });
 
-        prevBtn.addEventListener('click', () => {
-            track.scrollBy({ left: -370, behavior: 'smooth' });
+        // 3. BUSCAR PAQUETES (NUEVA LÓGICA DE BÚSQUEDA)
+        document.getElementById('form-paquetes').addEventListener('submit', async function(e) {
+            e.preventDefault();
+            
+            // Datos del formulario
+            const destinoInput = document.getElementById('destino-paquete').value;
+            const fechaViaje = document.getElementById('fecha-paquete').value;
+            const pasajeros = document.getElementById('pasajeros-paquete').value;
+            
+            const contenedor = document.getElementById('resultados-busqueda');
+            contenedor.innerHTML = '<div style="text-align:center; padding:20px; font-size:1.2rem;"><i class="fas fa-suitcase fa-spin"></i> Buscando paquetes disponibles...</div>';
+
+            try {
+                // Buscamos en nuestra base de datos de paquetes
+                const resp = await fetch('http://localhost:8080/paquetes');
+                const paquetes = await resp.json();
+                
+                // Filtramos por destino (Búsqueda laxa)
+                // Si el paquete es "Bariloche Invernal" y yo busco "Bariloche", debe aparecer.
+                const destinoBuscado = limpiarCodigo(destinoInput).toLowerCase();
+                const paquetesEncontrados = paquetes.filter(p => 
+                    p.titulo.toLowerCase().includes(destinoBuscado) || 
+                    destinoInput.toLowerCase().includes(p.titulo.toLowerCase())
+                );
+
+                contenedor.innerHTML = '';
+                
+                // Si no hay paquetes exactos, mostramos un aviso pero con botón de consulta general
+                if(paquetesEncontrados.length === 0) {
+                     contenedor.innerHTML = `
+                        <div style="text-align:center; padding:20px; background:#fff; border-radius:10px;">
+                            <p>No tenemos un paquete armado "enlatado" para <strong>${destinoInput}</strong> en este momento.</p>
+                            <a href="https://wa.me/${miWhatsapp}?text=Hola! Busco un paquete a medida para ${destinoInput} el día ${fechaViaje} para ${pasajeros} personas." 
+                               target="_blank" 
+                               style="display:inline-block; background:#25D366; color:white; padding:10px 20px; border-radius:50px; text-decoration:none; font-weight:bold; margin-top:10px;">
+                               <i class="fab fa-whatsapp"></i> Pedir Cotización a Medida
+                            </a>
+                        </div>`;
+                    return;
+                }
+
+                // Si encontramos paquetes, los mostramos
+                paquetesEncontrados.forEach(pack => {
+                    const min = pack.precio_min.toLocaleString('es-AR');
+                    const max = pack.precio_max.toLocaleString('es-AR');
+                    let iconos = '';
+                    pack.servicios.forEach(s => iconos += `<i class="fas ${mapaIconos[s]||'fa-check'}" title="${s}" style="margin-right:10px; color:#ffa500; font-size:1.2rem;"></i>`);
+
+                    // Mensaje personalizado con los datos del formulario
+                    const mensajeWhatsapp = `Hola! Me interesa el paquete *${pack.titulo}*. Planeo viajar el *${fechaViaje}* y somos *${pasajeros} personas*.`;
+
+                    const html = `
+                        <div style="background: white; border-radius: 10px; padding: 20px; margin-bottom: 15px; display: flex; gap:20px; align-items: center; box-shadow: 0 4px 6px rgba(0,0,0,0.1); border-left: 5px solid #ffa500;">
+                            <img src="${pack.imagen}" style="width:150px; height:100px; object-fit:cover; border-radius:5px;">
+                            <div style="flex:1;">
+                                <h3 style="margin:0; font-size:1.3rem;">${pack.titulo}</h3>
+                                <p style="margin:5px 0; color:#666;">${pack.dias}</p>
+                                <div style="margin-top:10px;">${iconos}</div>
+                            </div>
+                            <div style="text-align:right;">
+                                <span class="price-range-label">DESDE / HASTA</span>
+                                <span class="price-range-value">$${min} - $${max}</span>
+                                <a href="https://wa.me/${miWhatsapp}?text=${encodeURIComponent(mensajeWhatsapp)}" target="_blank" 
+                                   style="display:inline-block; background:#25D366; color:white; padding:10px 20px; border-radius:50px; text-decoration:none; font-weight:bold; margin-top:10px;">
+                                   Cotizar para mi fecha
+                                </a>
+                            </div>
+                        </div>
+                    `;
+                    contenedor.innerHTML += html;
+                });
+
+            } catch(e) { console.error(e); }
         });
+
+        // 4. CARGA INICIAL DE PAQUETES (CARRUSEL DESTACADOS - SIN CAMBIOS)
+        async function cargarDestacados() {
+            try {
+                const resp = await fetch('http://localhost:8080/paquetes');
+                const paquetes = await resp.json();
+                const track = document.getElementById('carouselTrack');
+                track.innerHTML = ''; 
+                paquetes.forEach(pack => {
+                    const min = pack.precio_min.toLocaleString('es-AR');
+                    const max = pack.precio_max.toLocaleString('es-AR');
+                    let htmlIconos = '<div class="services-icons">';
+                    pack.servicios.forEach(s => htmlIconos += `<div class="service-item"><i class="fas ${mapaIconos[s]||'fa-check'}"></i><span>${s}</span></div>`);
+                    htmlIconos += '</div>';
+                    const tarjeta = `
+                        <article class="offer-card">
+                            <div class="card-header"><div class="offer-image" style="background-image: url('${pack.imagen}');"></div><span class="offer-badge">${pack.dias}</span></div>
+                            <div class="card-body">
+                                <h3>${pack.titulo}</h3>
+                                ${htmlIconos}
+                                <div class="card-footer-split">
+                                    <div class="price-action" style="width:100%">
+                                        <div style="display:flex; justify-content:space-between; align-items:center;">
+                                            <div><span class="price-range-label">DESDE / HASTA</span><span class="price-range-value">$${min} - $${max}</span></div>
+                                            <a href="https://wa.me/${miWhatsapp}?text=Info ${pack.titulo}" target="_blank" style="background:#007bff; color:white; padding:8px 12px; border-radius:50px; text-decoration:none; font-size:0.9rem;">Consultar</a>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </article>`;
+                    track.innerHTML += tarjeta;
+                });
+            } catch (e) {}
+        }
+        cargarDestacados();
+
+        // 5. BUSCADOR VUELOS (Existente)
+        document.getElementById('form-vuelos').addEventListener('submit', async function(e) {
+            e.preventDefault();
+            const origen = limpiarCodigo(document.getElementById('origen').value);
+            const destino = limpiarCodigo(document.getElementById('destino').value);
+            const fechaIda = document.getElementById('fechaIda').value;
+            const fechaVuelta = document.getElementById('fechaVuelta').value;
+            const contenedor = document.getElementById('resultados-busqueda');
+            contenedor.innerHTML = '<div style="text-align:center; padding:20px; font-size:1.2rem;"><i class="fas fa-plane fa-spin"></i> Buscando...</div>';
+            try {
+                let url = `http://localhost:8080/buscar?origen=${origen}&destino=${destino}&fecha=${fechaIda}`;
+                if (fechaVuelta) url += `&fechaRegreso=${fechaVuelta}`;
+                const resp = await fetch(url);
+                const vuelos = await resp.json();
+                contenedor.innerHTML = '';
+                if (!vuelos || vuelos.length === 0) { contenedor.innerHTML = '<div style="text-align:center; padding:20px; background:#fff;">No se encontraron vuelos.</div>'; return; }
+                vuelos.forEach(vuelo => {
+                    const precioBase = parseFloat(vuelo.precio);
+                    const precioFlex = (precioBase * 1.30).toFixed(2);
+                    const badge = vuelo.escalas === 0 ? '<span class="badge-directo">Directo</span>' : `<span class="badge-escala">${vuelo.escalas} Escalas</span>`;
+                    const html = `
+                        <div style="background: white; border-radius: 10px; padding: 20px; margin-bottom: 15px; display: flex; justify-content: space-between; align-items: center; box-shadow: 0 4px 6px rgba(0,0,0,0.1); border-left: 5px solid #28a745;">
+                            <div style="display:flex; gap:15px; align-items:center;">
+                                <img src="https://pics.avs.io/200/200/${vuelo.aerolinea}.png" style="width:50px;" onerror="this.src='https://cdn-icons-png.flaticon.com/512/723/723955.png'">
+                                <div><h3 style="margin:0; font-size:1.1rem;">${vuelo.aerolinea}</h3><p style="margin:5px 0; color:#666;">${vuelo.duracion} | ${badge}</p></div>
+                            </div>
+                            <div style="text-align:right;">
+                                <span class="price-range-label">DESDE / HASTA</span>
+                                <span class="price-range-value">${precioBase} - ${precioFlex} ${vuelo.moneda}</span>
+                                <a href="https://wa.me/${miWhatsapp}?text=Vuelo ${vuelo.aerolinea}" target="_blank" style="display:inline-block; background:#25D366; color:white; padding:8px 15px; border-radius:20px; text-decoration:none; font-weight:bold; margin-top:5px;">Reservar</a>
+                            </div>
+                        </div>`;
+                    contenedor.innerHTML += html;
+                });
+            } catch (e) { contenedor.innerHTML = '<div style="color:red; text-align:center;">Error conexión</div>'; }
+        });
+        const t = document.getElementById('carouselTrack');
+        document.getElementById('nextBtn')?.addEventListener('click', () => t.scrollBy({left:300, behavior:'smooth'}));
+        document.getElementById('prevBtn')?.addEventListener('click', () => t.scrollBy({left:-300, behavior:'smooth'}));
     </script>
 </body>
 </html>
