@@ -9,6 +9,9 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
 
     <style>
+        /* SCROLL SUAVE PARA LOS BOTONES DEL MENÚ */
+        html { scroll-behavior: smooth; }
+
         /* ESTILOS DEL BUSCADOR */
         .search-form { display: flex; flex-wrap: wrap; gap: 10px; align-items: flex-end; width: 100%; }
         /* CLASE PARA OCULTAR FORMULARIOS */
@@ -59,16 +62,16 @@
             <a href="index.html" class="logo-container"><img src="assets/logo.png" alt="Herse Turismo Logo" class="main-logo"></a>
             <nav class="main-nav">
                 <ul>
-                    <li><a href="#" class="active">Inicio</a></li>
-                    <li><a href="#">Vuelos</a></li>
-                    <li><a href="#">Paquetes</a></li>
-                    <li><a href="#">Contacto</a></li>
+                    <li><a href="#inicio">INICIO</a></li>
+                    <li><a href="#destacados">DESTACADOS</a></li>
+                    <li><a href="#nosotros">NOSOTROS</a></li>
+                    <li><a href="#contacto">CONTACTO</a></li>
                 </ul>
             </nav>
         </div>
     </header>
 
-    <section class="hero-section">
+    <section class="hero-section" id="inicio">
         <div class="container hero-content">
             <h1>Descubre tu próximo destino</h1>
             <p>Las mejores ofertas en vuelos, hoteles y paquetes.</p>
@@ -148,18 +151,41 @@
         <div id="resultados-busqueda" style="margin-top: 30px; margin-bottom: 30px;"></div>
     </div>
 
-    <section class="featured-offers container">
+    <section class="featured-offers container" id="destacados">
         <h2>Ofertas Destacadas</h2>
         <div class="carousel-wrapper">
             <button class="carousel-btn prev-btn" id="prevBtn"><i class="fas fa-chevron-left"></i></button>
             <div class="carousel-track" id="carouselTrack">
-                <div style="padding:20px; width:100%; text-align:center;">Cargando ofertas...</div>
+                <div style="padding:20px; width:100%; text-align:center;">Cargando ofertas desde el servidor...</div>
             </div>
             <button class="carousel-btn next-btn" id="nextBtn"><i class="fas fa-chevron-right"></i></button>
         </div>
     </section>
 
-    <footer>
+    <section id="nosotros" style="padding: 60px 0; background-color: #f9f9f9;">
+        <div class="container" style="text-align: center;">
+            <h2 style="color: #005696; margin-bottom: 40px;">¿Por qué viajar con Herse Turismo?</h2>
+            <div style="display: flex; flex-wrap: wrap; justify-content: center; gap: 30px;">
+                <div style="flex: 1 1 300px; background: white; padding: 30px; border-radius: 10px; box-shadow: 0 5px 15px rgba(0,0,0,0.05);">
+                    <i class="fas fa-headset" style="font-size: 3rem; color: #ffa500; margin-bottom: 20px;"></i>
+                    <h3 style="margin-bottom: 15px;">Atención 24/7</h3>
+                    <p style="color: #666;">Estamos contigo antes, durante y después de tu viaje.</p>
+                </div>
+                <div style="flex: 1 1 300px; background: white; padding: 30px; border-radius: 10px; box-shadow: 0 5px 15px rgba(0,0,0,0.05);">
+                    <i class="fas fa-percentage" style="font-size: 3rem; color: #005696; margin-bottom: 20px;"></i>
+                    <h3 style="margin-bottom: 15px;">Mejores Precios</h3>
+                    <p style="color: #666;">Acceso directo a tarifas mayoristas y convenios exclusivos.</p>
+                </div>
+                <div style="flex: 1 1 300px; background: white; padding: 30px; border-radius: 10px; box-shadow: 0 5px 15px rgba(0,0,0,0.05);">
+                    <i class="fas fa-shield-alt" style="font-size: 3rem; color: #ffa500; margin-bottom: 20px;"></i>
+                    <h3 style="margin-bottom: 15px;">Viaja Seguro</h3>
+                    <p style="color: #666;">Todos nuestros paquetes incluyen asistencia básica.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <footer id="contacto">
         <div class="container"><p>&copy; 2026 Herse Turismo.</p></div>
     </footer>
 
@@ -227,57 +253,36 @@
             } catch(e) { console.error(e); }
         });
 
-        // 3. BUSCAR PAQUETES (NUEVA LÓGICA DE BÚSQUEDA)
+        // 3. BUSCAR PAQUETES
         document.getElementById('form-paquetes').addEventListener('submit', async function(e) {
             e.preventDefault();
-            
-            // Datos del formulario
             const destinoInput = document.getElementById('destino-paquete').value;
             const fechaViaje = document.getElementById('fecha-paquete').value;
             const pasajeros = document.getElementById('pasajeros-paquete').value;
-            
             const contenedor = document.getElementById('resultados-busqueda');
             contenedor.innerHTML = '<div style="text-align:center; padding:20px; font-size:1.2rem;"><i class="fas fa-suitcase fa-spin"></i> Buscando paquetes disponibles...</div>';
 
             try {
-                // Buscamos en nuestra base de datos de paquetes
                 const resp = await fetch('http://localhost:8080/paquetes');
                 const paquetes = await resp.json();
-                
-                // Filtramos por destino (Búsqueda laxa)
-                // Si el paquete es "Bariloche Invernal" y yo busco "Bariloche", debe aparecer.
                 const destinoBuscado = limpiarCodigo(destinoInput).toLowerCase();
-                const paquetesEncontrados = paquetes.filter(p => 
-                    p.titulo.toLowerCase().includes(destinoBuscado) || 
-                    destinoInput.toLowerCase().includes(p.titulo.toLowerCase())
-                );
+                const paquetesEncontrados = paquetes.filter(p => p.titulo.toLowerCase().includes(destinoBuscado) || destinoInput.toLowerCase().includes(p.titulo.toLowerCase()));
 
                 contenedor.innerHTML = '';
-                
-                // Si no hay paquetes exactos, mostramos un aviso pero con botón de consulta general
                 if(paquetesEncontrados.length === 0) {
-                     contenedor.innerHTML = `
+                      contenedor.innerHTML = `
                         <div style="text-align:center; padding:20px; background:#fff; border-radius:10px;">
-                            <p>No tenemos un paquete armado "enlatado" para <strong>${destinoInput}</strong> en este momento.</p>
-                            <a href="https://wa.me/${miWhatsapp}?text=Hola! Busco un paquete a medida para ${destinoInput} el día ${fechaViaje} para ${pasajeros} personas." 
-                               target="_blank" 
-                               style="display:inline-block; background:#25D366; color:white; padding:10px 20px; border-radius:50px; text-decoration:none; font-weight:bold; margin-top:10px;">
-                               <i class="fab fa-whatsapp"></i> Pedir Cotización a Medida
-                            </a>
+                            <p>No tenemos un paquete armado para <strong>${destinoInput}</strong>.</p>
+                            <a href="https://wa.me/${miWhatsapp}?text=Hola! Busco un paquete a medida para ${destinoInput} el día ${fechaViaje} para ${pasajeros} personas." target="_blank" style="display:inline-block; background:#25D366; color:white; padding:10px 20px; border-radius:50px; text-decoration:none; font-weight:bold; margin-top:10px;"><i class="fab fa-whatsapp"></i> Pedir Cotización a Medida</a>
                         </div>`;
                     return;
                 }
-
-                // Si encontramos paquetes, los mostramos
                 paquetesEncontrados.forEach(pack => {
                     const min = pack.precio_min.toLocaleString('es-AR');
                     const max = pack.precio_max.toLocaleString('es-AR');
                     let iconos = '';
                     pack.servicios.forEach(s => iconos += `<i class="fas ${mapaIconos[s]||'fa-check'}" title="${s}" style="margin-right:10px; color:#ffa500; font-size:1.2rem;"></i>`);
-
-                    // Mensaje personalizado con los datos del formulario
                     const mensajeWhatsapp = `Hola! Me interesa el paquete *${pack.titulo}*. Planeo viajar el *${fechaViaje}* y somos *${pasajeros} personas*.`;
-
                     const html = `
                         <div style="background: white; border-radius: 10px; padding: 20px; margin-bottom: 15px; display: flex; gap:20px; align-items: center; box-shadow: 0 4px 6px rgba(0,0,0,0.1); border-left: 5px solid #ffa500;">
                             <img src="${pack.imagen}" style="width:150px; height:100px; object-fit:cover; border-radius:5px;">
@@ -289,20 +294,15 @@
                             <div style="text-align:right;">
                                 <span class="price-range-label">DESDE / HASTA</span>
                                 <span class="price-range-value">$${min} - $${max}</span>
-                                <a href="https://wa.me/${miWhatsapp}?text=${encodeURIComponent(mensajeWhatsapp)}" target="_blank" 
-                                   style="display:inline-block; background:#25D366; color:white; padding:10px 20px; border-radius:50px; text-decoration:none; font-weight:bold; margin-top:10px;">
-                                   Cotizar para mi fecha
-                                </a>
+                                <a href="https://wa.me/${miWhatsapp}?text=${encodeURIComponent(mensajeWhatsapp)}" target="_blank" style="display:inline-block; background:#25D366; color:white; padding:10px 20px; border-radius:50px; text-decoration:none; font-weight:bold; margin-top:10px;">Cotizar para mi fecha</a>
                             </div>
-                        </div>
-                    `;
+                        </div>`;
                     contenedor.innerHTML += html;
                 });
-
             } catch(e) { console.error(e); }
         });
 
-        // 4. CARGA INICIAL DE PAQUETES (CARRUSEL DESTACADOS - SIN CAMBIOS)
+        // 4. CARGA INICIAL DE PAQUETES (BACKEND)
         async function cargarDestacados() {
             try {
                 const resp = await fetch('http://localhost:8080/paquetes');
@@ -337,7 +337,7 @@
         }
         cargarDestacados();
 
-        // 5. BUSCADOR VUELOS (Existente)
+        // 5. BUSCADOR VUELOS
         document.getElementById('form-vuelos').addEventListener('submit', async function(e) {
             e.preventDefault();
             const origen = limpiarCodigo(document.getElementById('origen').value);
@@ -379,21 +379,21 @@
     </script>
     
     <script type="text/javascript">
-  (function(d, t) {
-      var v = d.createElement(t), s = d.getElementsByTagName(t)[0];
-      v.onload = function() {
-        window.voiceflow.chat.load({
-          verify: { projectID: '698a4583ff043bc8b726e742' },
-          url: 'https://general-runtime.voiceflow.com',
-          versionID: 'production',
-          voice: {
-            url: "https://runtime-api.voiceflow.com"
+      (function(d, t) {
+          var v = d.createElement(t), s = d.getElementsByTagName(t)[0];
+          v.onload = function() {
+            window.voiceflow.chat.load({
+              verify: { projectID: '698a4583ff043bc8b726e742' },
+              url: 'https://general-runtime.voiceflow.com',
+              versionID: 'production',
+              voice: {
+                url: "https://runtime-api.voiceflow.com"
+              }
+            });
           }
-        });
-      }
-      v.src = "https://cdn.voiceflow.com/widget-next/bundle.mjs"; v.type = "text/javascript"; s.parentNode.insertBefore(v, s);
-  })(document, 'script');
-</script>
+          v.src = "https://cdn.voiceflow.com/widget-next/bundle.mjs"; v.type = "text/javascript"; s.parentNode.insertBefore(v, s);
+      })(document, 'script');
+    </script>
 
 </body>
 </html>

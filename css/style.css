@@ -9,6 +9,10 @@
     --font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
 }
 
+html {
+    scroll-behavior: smooth;
+}
+
 /* ================= RESETEO ================= */
 * {
     margin: 0;
