@@ -377,5 +377,23 @@
         document.getElementById('nextBtn')?.addEventListener('click', () => t.scrollBy({left:300, behavior:'smooth'}));
         document.getElementById('prevBtn')?.addEventListener('click', () => t.scrollBy({left:-300, behavior:'smooth'}));
     </script>
+    
+    <script type="text/javascript">
+  (function(d, t) {
+      var v = d.createElement(t), s = d.getElementsByTagName(t)[0];
+      v.onload = function() {
+        window.voiceflow.chat.load({
+          verify: { projectID: '698a4583ff043bc8b726e742' },
+          url: 'https://general-runtime.voiceflow.com',
+          versionID: 'production',
+          voice: {
+            url: "https://runtime-api.voiceflow.com"
+          }
+        });
+      }
+      v.src = "https://cdn.voiceflow.com/widget-next/bundle.mjs"; v.type = "text/javascript"; s.parentNode.insertBefore(v, s);
+  })(document, 'script');
+</script>
+
 </body>
 </html>
