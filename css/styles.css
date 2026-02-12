@@ -1,0 +1,307 @@
+/* --- Variables de Color (Identidad Herse) --- */
+:root {
+    --primary-blue: #004A8F;   /* Azul del logo */
+    --primary-orange: #F7941D; /* Naranja del logo */
+    --dark-text: #333333;
+    --light-bg: #f4f7fa;
+    --white: #ffffff;
+    --shadow: 0 4px 15px rgba(0,0,0,0.1);
+}
+
+/* --- Reset Básico --- */
+* { margin: 0; padding: 0; box-sizing: border-box; }
+body { font-family: 'Nunito', sans-serif; color: var(--dark-text); line-height: 1.6; }
+a { text-decoration: none; color: inherit; transition: 0.3s; }
+ul { list-style: none; }
+img { max-width: 100%; display: block; }
+html { scroll-behavior: smooth; }
+
+.container { width: 90%; max-width: 1200px; margin: 0 auto; }
+.text-orange { color: var(--primary-orange); }
+.text-blue { color: var(--primary-blue); }
+.bg-light { background-color: var(--light-bg); }
+
+/* --- Botones Generales --- */
+.btn-primary {
+    background-color: var(--primary-orange);
+    color: var(--white);
+    padding: 10px 25px;
+    border-radius: 50px;
+    font-weight: 700;
+    display: inline-block;
+}
+.btn-primary:hover { background-color: #e0800b; transform: translateY(-2px); }
+
+/* --- Navbar --- */
+.navbar {
+    background-color: var(--white);
+    padding: 15px 0;
+    position: sticky;
+    top: 0;
+    z-index: 1000;
+    box-shadow: 0 2px 10px rgba(0,0,0,0.05);
+}
+.nav-container { display: flex; justify-content: space-between; align-items: center; }
+.logo img { height: 60px; }
+.nav-links { display: flex; gap: 30px; }
+.nav-links a { font-weight: 600; color: var(--primary-blue); }
+.nav-links a:hover, .nav-links a.active { color: var(--primary-orange); }
+
+/* --- Hero Section (Portada Corta) --- */
+.hero {
+    height: 60vh;
+    min-height: 500px;
+    /* Imagen de playa */
+    background-image: url('https://images.unsplash.com/photo-1507525428034-b723cf961d3e?ixlib=rb-1.2.1&auto=format&fit=crop&w=1920&q=80');
+    background-size: cover;
+    background-position: center bottom;
+    position: relative;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    color: var(--white);
+}
+.hero-overlay {
+    position: absolute; top: 0; left: 0; width: 100%; height: 100%;
+    background: rgba(0, 50, 100, 0.4); /* Filtro suave */
+}
+.hero-content { position: relative; z-index: 2; max-width: 800px; padding: 20px; }
+.hero-content h1 { font-size: 3rem; font-weight: 900; margin-bottom: 20px; }
+.hero-content p { font-size: 1.2rem; margin-bottom: 30px; }
+
+
+/* --- Filtros (Botones de Región) --- */
+.region-filter { display: flex; gap: 10px; justify-content: center; flex-wrap: wrap; margin-bottom: 30px; padding: 0 15px; }
+.region-btn {
+    background: white; border: 1px solid #ddd; color: #555; padding: 10px 20px;
+    border-radius: 50px; cursor: pointer; font-weight: 600; transition: 0.3s;
+    display: flex; align-items: center; gap: 8px; box-shadow: 0 2px 5px rgba(0,0,0,0.05);
+}
+.region-btn:hover { background: var(--primary-blue); color: white; border-color: var(--primary-blue); transform: translateY(-3px); }
+.region-btn i { color: var(--primary-orange); }
+.region-btn:hover i { color: white; }
+
+/* --- Secciones Estilo Estante --- */
+.destination-section { padding: 40px 0; border-bottom: 1px solid #eee; }
+.section-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 25px; padding: 0 15px; }
+.section-title { 
+    font-size: 1.8rem; color: var(--primary-blue); font-weight: 700; 
+    display: flex; align-items: center; gap: 10px; 
+}
+.section-title::before { content: ''; display: block; width: 5px; height: 30px; background: var(--primary-orange); border-radius: 2px; }
+
+/* --- Carrusel Deslizable --- */
+.carousel-wrapper { position: relative; padding: 0 15px; }
+.carousel-track { 
+    display: flex; overflow-x: auto; gap: 25px; padding-bottom: 20px; scroll-behavior: smooth;
+    scrollbar-width: none; -ms-overflow-style: none;
+}
+.carousel-track::-webkit-scrollbar { display: none; }
+
+/* Flechas de Navegación */
+.nav-btn {
+    position: absolute; top: 40%; transform: translateY(-50%);
+    width: 45px; height: 45px; border-radius: 50%; background: white;
+    border: 1px solid #eee; box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+    color: var(--primary-blue); font-size: 1.2rem; cursor: pointer; z-index: 10;
+    display: flex; align-items: center; justify-content: center; transition: 0.3s;
+}
+.nav-btn:hover { background: var(--primary-blue); color: white; }
+.prev-btn { left: -10px; }
+.next-btn { right: -10px; }
+
+
+/* --- DISEÑO DE LA TARJETA (NUEVO ESTILO TIPO AIRBNB/DESPEGRAR) --- */
+.package-card {
+    flex: 0 0 350px; /* Un poco más anchas para que entre la info */
+    background: white; 
+    border-radius: 12px; 
+    overflow: hidden;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.08); 
+    transition: 0.3s; 
+    border: 1px solid #eee;
+    display: flex; 
+    flex-direction: column;
+    font-family: 'Nunito', sans-serif;
+}
+.package-card:hover { 
+    transform: translateY(-5px); 
+    box-shadow: 0 10px 25px rgba(0,0,0,0.15); 
+}
+
+/* IMAGEN Y BADGE */
+.card-img-container { 
+    position: relative; 
+    height: 180px; 
+    overflow: hidden; 
+}
+.card-img { 
+    width: 100%; 
+    height: 100%; 
+    object-fit: cover; 
+    transition: 0.5s; 
+}
+.package-card:hover .card-img { transform: scale(1.05); }
+
+/* Etiqueta Azul (Ej: 4 días | salidas todo el año) */
+.badge-blue {
+    position: absolute; 
+    bottom: 10px; 
+    left: 10px; 
+    background-color: var(--primary-blue);
+    color: white; 
+    padding: 6px 12px; 
+    border-radius: 4px; 
+    font-size: 0.75rem; 
+    font-weight: 700;
+    letter-spacing: 0.5px;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.2);
+}
+
+/* CONTENIDO */
+.card-content { 
+    padding: 20px; 
+    flex: 1; 
+    display: flex; 
+    flex-direction: column; 
+    gap: 15px; 
+}
+
+.card-title { 
+    font-size: 1.25rem; 
+    font-weight: 800; 
+    color: #1a1a1a; 
+    margin: 0; 
+}
+
+/* FILA DE ICONOS AZULES */
+.icons-row {
+    display: flex;
+    justify-content: space-between; 
+    border-bottom: 1px solid #f0f0f0;
+    padding-bottom: 15px;
+}
+.icon-item {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 5px;
+    font-size: 0.7rem;
+    color: var(--primary-blue);
+    font-weight: 600;
+}
+.icon-item i {
+    font-size: 1.2rem; 
+}
+
+/* ZONA INFERIOR (LISTA Y PRECIO) */
+.card-bottom-layout {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+/* Lista de detalles (izquierda) */
+.info-list {
+    list-style: none;
+    font-size: 0.8rem;
+    color: #555;
+    line-height: 1.6;
+}
+.info-list li::before {
+    content: "•";
+    color: #999;
+    margin-right: 5px;
+}
+
+/* Bloque de Precio (derecha con línea divisoria) */
+.price-block {
+    border-left: 1px solid #eee;
+    padding-left: 15px;
+    margin-left: 10px;
+    text-align: left;
+    min-width: 90px;
+}
+.label-consultar {
+    display: block;
+    font-size: 0.7rem;
+    color: #888;
+    margin-bottom: -3px;
+}
+.price-text {
+    font-size: 1.3rem;
+    font-weight: 900;
+    color: #000;
+    letter-spacing: -0.5px;
+}
+
+
+/* --- Footer --- */
+.footer { background-color: var(--primary-blue); color: var(--white); padding-top: 60px; }
+.footer-content {
+    display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+    gap: 40px; padding-bottom: 40px;
+}
+.footer-logo { background: white; padding: 10px; border-radius: 10px; margin-bottom: 20px; max-width: 150px; }
+.footer-col h4 { margin-bottom: 20px; font-size: 1.2rem; color: var(--primary-orange); }
+.socials a { display: inline-block; font-size: 1.5rem; margin-right: 15px; color: white; }
+.socials a:hover { color: var(--primary-orange); }
+.footer-bottom { background-color: #003366; text-align: center; padding: 20px; font-size: 0.9rem; }
+
+/* --- Sección Nosotros / Por qué elegirnos --- */
+.about-section {
+    padding: 80px 0;
+    background-color: var(--light-bg); /* Mismo gris suave que las secciones alternas */
+    text-align: center;
+}
+
+.about-grid {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 30px;
+    margin-top: 40px;
+}
+
+.about-card {
+    flex: 1 1 300px; /* Ancho flexible */
+    background: white;
+    padding: 40px 30px;
+    border-radius: 15px;
+    box-shadow: var(--shadow); /* Sombra suave igual a las cards de viaje */
+    transition: 0.3s;
+    border: 1px solid #eee;
+}
+
+.about-card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 10px 25px rgba(0,0,0,0.1);
+}
+
+.icon-about {
+    font-size: 3rem;
+    margin-bottom: 20px;
+    display: inline-block;
+}
+
+.about-card h3 {
+    margin-bottom: 15px;
+    color: var(--dark-text);
+    font-weight: 800;
+    font-size: 1.4rem;
+}
+
+.about-card p {
+    color: #666;
+    font-size: 1rem;
+    line-height: 1.6;
+}
+
+/* --- Responsive --- */
+@media (max-width: 768px) {
+    .nav-links { display: none; }
+    .hero-content h1 { font-size: 2.2rem; }
+    .nav-btn { display: none; } /* En móvil se desliza con el dedo */
+    .carousel-track { padding-right: 20px; }
+}
